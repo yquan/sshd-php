@@ -7,9 +7,7 @@ versions=( 7.1 7.2 7.3 7.4 8.0 )
 for version in "${versions[@]}"
 do
 	echo ${version}
-  git checkout release/${version}
-  git pull
-  docker build -t yquan/sshd-php:${version} .
+  docker build --build-arg ARG_PHP_VERSION=${version} -t yquan/sshd-php:${version} .
 done
 
-docker image push --all-tags yquan/sshd-php
+# docker image push --all-tags yquan/sshd-php
