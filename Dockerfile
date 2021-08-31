@@ -1,22 +1,25 @@
 ARG ARG_PHP_VERSION=8.0
 FROM php:${ARG_PHP_VERSION}-alpine
 
+# install extra PHP extensions
 ADD https://github.com/mlocati/docker-php-extension-installer/releases/latest/download/install-php-extensions /usr/local/bin/
 
 RUN chmod +x /usr/local/bin/install-php-extensions && sync && \
     install-php-extensions \
-    gd \
-    zip \
-    mbstring \
-    json \
-    xml \
-    session \
-    mysqli \
-    pdo_mysql \
-    tokenizer \
-    mcrypt \
-    xdebug
+        gd \
+        zip \
+        mbstring \
+        json \
+        xml \
+        session \
+        mysqli \
+        pdo_mysql \
+        tokenizer \
+        mcrypt \
+        pgsql \
+        xdebug
 
+# install sshd
 RUN apk update && \
     apk add bash git openssh rsync augeas shadow rssh && \
     deluser $(getent passwd 33 | cut -d: -f1) && \
